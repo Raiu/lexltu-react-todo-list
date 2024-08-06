@@ -1,0 +1,30 @@
+.site-header {
+    margin-bottom: 2rem;
+}
+
+.site-nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 2rem 1rem 2rem;
+  align-items: center;
+}
+
+.site-nav a {
+  text-decoration: none;
+}
+
+.site-header .logo {
+  font-weight: 600;
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+.mainmenu {
+  display: flex;
+  gap: 2rem;
+  font-weight: 500;
+}
+
+.mainmenu li {
+  list-style: none;
+}
