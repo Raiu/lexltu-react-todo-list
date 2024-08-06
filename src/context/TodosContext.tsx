@@ -52,9 +52,6 @@ export function useTodosActions(): ITodoActions {
 }
 
 function reducer(state: ITodo[], action: TAction): ITodo[] {
-  console.log("State:", state);
-  console.log("Action:", action);
-
   if (!action.data) {
     throw new Error("Action payload is empty");
   }

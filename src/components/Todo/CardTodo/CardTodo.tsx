@@ -44,72 +44,71 @@ export function CardTodo({ todo, actions, editingTodoId, setEditingTodoId }: IPr
   const onToggleComplete = () => {
     setCurrentTodo((curr) => ({ ...curr, completed: !curr.completed }));
     actions.toggleTodo(todo.id);
-  }
+  };
 
   useEffect(() => {
     if (editingTodoId !== todo.id && isEditing) {
       console.log("saveEdit");
       saveEdit();
     }
-  }, [editingTodoId, todo, isEditing, saveEdit]); 
-
+  }, [editingTodoId, todo, isEditing, saveEdit]);
 
   return (
     <div className={"card-todo " + (todo.completed ? "completed" : "")}>
-      <div className="flex gap-4">
-        <div className="complete">
-          <input
-            className="checkbox"
-            type="checkbox"
-            value="completed"
-            checked={todo.completed}
-            onChange={onToggleComplete}
-          />
-        </div>
-        {isEditing ? (
-          <div className="edit" style={{ width: "100%" }}>
-            <div className="">
-              <textarea
-                value={currentTodo.content}
-                onChange={(e) => setCurrentTodo((p) => ({ ...p, content: e.target.value }))}
-                rows={2}
-                style={{ width: "100%" }}
-              />
-            </div>
-            <div className="actions">
-              <button className="btn close" onClick={() => cancelEdit()}>
-                <CloseOutlined />
-              </button>
-
-              <button className="btn save" onClick={() => saveEdit()}>
-                <SaveAsOutlined />
-              </button>
-            </div>
+      <div className={(todo.completed ? "disabled-overlay" : "")}>
+        <div className="flex gap-4">
+          <div className="complete">
+            <input
+              className="checkbox"
+              type="checkbox"
+              value="completed"
+              checked={todo.completed}
+              onChange={onToggleComplete}
+            />
           </div>
-        ) : (
-          <>
-            <div className="content">
-              <div>
-                <span>
-                  {todo.content}
-                </span>
+          {isEditing ? (
+            <div className="edit" style={{ width: "100%" }}>
+              <div className="">
+                <textarea
+                  value={currentTodo.content}
+                  onChange={(e) => setCurrentTodo((p) => ({ ...p, content: e.target.value }))}
+                  rows={2}
+                  style={{ width: "100%" }}
+                />
               </div>
-              <div className="legend flex gap-2">
-                <span>Created by: {todo.user}</span>
-                <span>-</span>
-                <span>{time}</span>
+              <div className="actions">
+                <button className="btn close" onClick={() => cancelEdit()}>
+                  <CloseOutlined />
+                </button>
+
+                <button className="btn save" onClick={() => saveEdit()}>
+                  <SaveAsOutlined />
+                </button>
               </div>
             </div>
-            <div className="actions">
-              <button className="btn edit" onClick={() => startEdit()}>
-                <EditOutlined />
-              </button>
-              <button className="btn delete" onClick={() => actions.deleteTodo(todo.id)}>
-                <DeleteOutlined />
-              </button>
-            </div>
-          </>
-        )}
+          ) : (
+            <>
+              <div className="content">
+                <div>
+                  <span>{todo.content}</span>
+                </div>
+                <div className="legend flex gap-2">
+                  <span>Created by: {todo.user}</span>
+                  <span>-</span>
+                  <span>{time}</span>
+                </div>
+              </div>
+              <div className="actions">
+                <button className="btn edit" onClick={() => startEdit()}>
+                  <EditOutlined />
+                </button>
+                <button className="btn delete" onClick={() => actions.deleteTodo(todo.id)}>
+                  <DeleteOutlined />
+                </button>
+              </div>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );

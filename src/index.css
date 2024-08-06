@@ -77,6 +77,18 @@ body {
     background-color: #263238;
 }
 
+a {
+    all: unset;
+}
+
+a {
+    cursor: pointer;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
 
 /* MARGINS AND PADDINGS */
 /***********************/
