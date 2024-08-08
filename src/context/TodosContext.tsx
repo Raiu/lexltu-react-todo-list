@@ -1,8 +1,6 @@
 import React from "react";
-
-import { todos as initialTodos } from "@data";
 import { ActionType, INewTodo, ITodo, ITodoActions, TAction } from "@interfaces/Todo";
-
+import { todos as initialTodos } from "@data";
 import { users as usersData } from "@data";
 
 const TodosContext = React.createContext<ITodo[]>([] as ITodo[]);
@@ -48,7 +46,11 @@ export function useTodosActions(): ITodoActions {
     dispatch({ type: ActionType.TOGGLE_COMPLETED, data: id });
   };
 
-  return { createTodo, updateTodo, deleteTodo, toggleTodo: toggleCompletedTodo };
+  const changeOrderTodo = (id: number, change: number) => {
+    dispatch({ type: ActionType.CHANGE_ORDER, data: { id, change } });
+  };
+
+  return { createTodo, updateTodo, deleteTodo, toggleCompletedTodo, changeOrderTodo };
 }
 
 function reducer(state: ITodo[], action: TAction): ITodo[] {
@@ -67,11 +69,12 @@ function reducer(state: ITodo[], action: TAction): ITodo[] {
         ...state,
         {
           id: newId,
+          order: newId,
           user: userName,
           content: action.data.content,
+          timestamp: Date.now(),
           completed: false,
           deleted: false,
-          timestamp: Date.now(),
         },
       ];
     }
@@ -88,11 +91,42 @@ function reducer(state: ITodo[], action: TAction): ITodo[] {
       return state.map((x) => (x.id === action.data ? { ...x, completed: !x.completed } : x));
     }
 
+    case ActionType.CHANGE_ORDER: {
+      return changeOrder(action.data.id, action.data.change, state);
+    }
+
     default:
       return state;
   }
 }
+
 type TisEmpty = string | number | boolean | null | undefined | object | [];
 function isEmpty(value: TisEmpty): boolean {
-  return value == null || (typeof value === "string" && value.trim().length === 0);
+  return (
+    value == null || value == undefined || (typeof value === "string" && value.trim().length === 0)
+  );
+}
+
+function changeOrder(id: number, direction: number, state: ITodo[]): ITodo[] {
+  const filteredState = [...state].filter((x) => !x.deleted).sort((a, b) => a.order - b.order);
+  
+  const currentIndex = filteredState.findIndex((x) => x.id === id);
+  if (currentIndex === -1) {
+    return state;
+  }
+
+  const nextIndex = currentIndex + direction;
+  if (nextIndex < 0 || nextIndex >= filteredState.length) {
+    return state;
+  }
+
+  return [...state].map(x => {
+    if (x.id === id) {
+      return { ...x, order: filteredState[nextIndex].order };
+    }
+    if (x.id === filteredState[nextIndex].id) {
+      return { ...x, order: filteredState[currentIndex].order };
+    }
+    return x;
+  })
 }

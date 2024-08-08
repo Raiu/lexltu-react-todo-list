@@ -1,7 +1,7 @@
 import { ReactElement, useCallback, useEffect, useState } from "react";
 import { ITodo, ITodoActions } from "@interfaces/Todo";
 
-import { CloseOutlined, DeleteOutlined, EditOutlined, SaveAsOutlined } from "@mui/icons-material";
+import { CloseOutlined, DeleteOutlined, EditOutlined, KeyboardArrowDownOutlined, KeyboardArrowUpOutlined, SaveAsOutlined } from "@mui/icons-material";
 
 import "./index.css";
 
@@ -10,12 +10,13 @@ interface IProps {
   actions: ITodoActions;
   editingTodoId: number;
   setEditingTodoId: (value: number) => void;
+  changeOrderTodo: (id: number, change: number) => void;
 }
 
-export function CardTodo({ todo, actions, editingTodoId, setEditingTodoId }: IProps): ReactElement {
+export function CardTodo({ todo, actions, editingTodoId, setEditingTodoId, changeOrderTodo}: IProps): ReactElement {
   const [isEditing, setIsEditing] = useState(false);
   const [currentTodo, setCurrentTodo] = useState<ITodo>({ ...todo });
-  const time = timeAgo(new Date(todo.timestamp));
+  const time = timeAgo(new Date(todo.timestamp * 1000));
 
   const startEdit = () => {
     setIsEditing(true);
@@ -30,6 +31,10 @@ export function CardTodo({ todo, actions, editingTodoId, setEditingTodoId }: IPr
     }
   };
 
+  const handleChangeOrder = (direction: number) => {
+    changeOrderTodo(todo.id, direction);
+  }
+
   const saveEdit = useCallback(() => {
     if (!isEditing) {
       return;
@@ -43,7 +48,7 @@ export function CardTodo({ todo, actions, editingTodoId, setEditingTodoId }: IPr
 
   const onToggleComplete = () => {
     setCurrentTodo((curr) => ({ ...curr, completed: !curr.completed }));
-    actions.toggleTodo(todo.id);
+    actions.toggleCompletedTodo(todo.id);
   };
 
   useEffect(() => {
@@ -99,12 +104,23 @@ export function CardTodo({ todo, actions, editingTodoId, setEditingTodoId }: IPr
                 </div>
               </div>
               <div className="actions">
+                <div>
                 <button className="btn edit" onClick={() => startEdit()}>
                   <EditOutlined />
                 </button>
                 <button className="btn delete" onClick={() => actions.deleteTodo(todo.id)}>
                   <DeleteOutlined />
                 </button>
+
+                </div>
+                <div className="sort" style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+                  <button className="btn" onClick={() => handleChangeOrder(-1)}>
+                   <KeyboardArrowUpOutlined />
+                  </button>
+                  <button className="btn" onClick={() => handleChangeOrder(1)}>
+                   <KeyboardArrowDownOutlined />
+                  </button>
+                </div>
               </div>
             </>
           )}
