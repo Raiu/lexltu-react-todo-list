@@ -4,7 +4,7 @@ import { useTodos, useTodosActions } from "@context";
 import { CardTodo } from "@components/Todo";
 import { sortTodos } from "./helpers";
 
-import "@components/Todo/ListTodo/index.css";
+import "./index.css";
 
 interface ISortOptions {
   value: string;
