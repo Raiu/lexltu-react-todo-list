@@ -10,10 +10,10 @@ interface IProps {
   actions: ITodoActions;
   editingTodoId: number;
   setEditingTodoId: (value: number) => void;
-  changeOrderTodo: (id: number, change: number) => void;
+  changeOrder: (id: number, change: number) => void;
 }
 
-export function CardTodo({ todo, actions, editingTodoId, setEditingTodoId, changeOrderTodo}: IProps): ReactElement {
+export function CardTodo({ todo, actions, editingTodoId, setEditingTodoId, changeOrder: changeOrderTodo}: IProps): ReactElement {
   const [isEditing, setIsEditing] = useState(false);
   const [currentTodo, setCurrentTodo] = useState<ITodo>({ ...todo });
   const time = timeAgo(new Date(todo.timestamp * 1000));
