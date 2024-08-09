@@ -2,7 +2,6 @@ import { createBrowserRouter, createRoutesFromElements, Route } from "react-rout
 import { App } from "@/App";
 import { AboutPage, AddTodoPage, ListTodoPage } from "@pages";
 
-
 export const router = createBrowserRouter(
     createRoutesFromElements(
         <Route path="/" element={<App />}>
@@ -11,6 +10,6 @@ export const router = createBrowserRouter(
             <Route index element={<ListTodoPage />} />
             <Route path="list" element={<ListTodoPage />} />
             <Route path="home" element={<ListTodoPage />} />
-        </Route>
-    )
-)
+        </Route>,
+    ),
+);

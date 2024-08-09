@@ -7,4 +7,4 @@ export const sortOptions: ISortOptions[] = [
     { value: "authorDesc", label: "Author", field: "user", asc: false },
     { value: "timeAsc", label: "Time", field: "timestamp", asc: true },
     { value: "timeDesc", label: "Time", field: "timestamp", asc: false },
-  ];
+];

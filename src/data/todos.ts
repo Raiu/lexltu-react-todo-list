@@ -25,7 +25,7 @@ export const todos: ITodo[] = [
         content: "Buy bread",
         completed: false,
         deleted: false,
-        timestamp: 1720356617 ,
+        timestamp: 1720356617,
         order: 3,
     },
     {
@@ -34,7 +34,7 @@ export const todos: ITodo[] = [
         content: "Buy milk",
         completed: false,
         deleted: false,
-        timestamp: 1691412617 ,
+        timestamp: 1691412617,
         order: 4,
     },
     {
@@ -43,8 +43,7 @@ export const todos: ITodo[] = [
         content: "Buy eggs",
         completed: false,
         deleted: false,
-        timestamp: 1407415817 ,
+        timestamp: 1407415817,
         order: 5,
     },
-]
-
+];

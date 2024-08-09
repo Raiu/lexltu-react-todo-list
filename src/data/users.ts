@@ -20,5 +20,5 @@ export const users: IUser[] = [
     {
         id: 5,
         name: "Bob Smith",
-    }
-]
+    },
+];

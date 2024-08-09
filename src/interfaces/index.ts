@@ -1,6 +1,5 @@
 export * from "./Todo";
 
-
 export interface IUser {
     id: number;
     name: string;
@@ -11,4 +10,4 @@ export interface ISortOptions {
     label: string;
     field: string;
     asc: boolean;
-  }
+}

@@ -5,5 +5,5 @@ export function Footer(): React.ReactElement {
         <footer className="site-footer">
             <p className="copyright">Copyright © 2024 JohnSnow</p>
         </footer>
-    )
+    );
 }
